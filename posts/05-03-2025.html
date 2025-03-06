@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>4 Marzo 2025</title>
+    <title>5 Marzo 2025</title>
     <link rel="stylesheet" href="../style.css">
     <script defer src="../script.js"></script>
 </head>
@@ -17,38 +17,13 @@
     <main>
         <p>Per ora farò delle pagine di prova per testare al meglio il funzionamento.</p>
 
-        <p class="geolocalizzazione">📍 Scritto a Potenza, Italia</p>
+        <p class="geolocalizzazione"></p>
     </main>
 
     <footer>
-        <button id="prev-article" onclick="window.location.href='3-marzo-2025.html'">⬅️ Articolo precedente</button>
-        <button id="next-article" onclick="window.location.href='5-marzo-2025.html'">Articolo successivo ➡️</button>
+        <button id="prev-article" onclick="window.location.href='04-03-2025.html'">⬅️ Articolo precedente</button>
+        <button id="next-article" onclick="window.location.href='06-03-2025.html'">Articolo successivo ➡️</button>
     </footer>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let prevButton = document.getElementById("prev-article");
-            let nextButton = document.getElementById("next-article");
-            
-            function checkFileExists(url, button) {
-                fetch(url, { method: 'HEAD' })
-                    .then(response => {
-                        if (!response.ok) {
-                            button.style.display = 'none';
-                        }
-                    })
-                    .catch(() => button.style.display = 'none');
-            }
-            
-            if (prevButton) {
-                checkFileExists(prevButton.getAttribute("onclick").match(/'([^']+)'/)[1], prevButton);
-            }
-            
-            if (nextButton) {
-                checkFileExists(nextButton.getAttribute("onclick").match(/'([^']+)'/)[1], nextButton);
-            }
-        });
-    </script>
 
 </body>
 </html>
