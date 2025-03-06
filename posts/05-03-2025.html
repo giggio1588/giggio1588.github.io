@@ -25,5 +25,30 @@
         <button id="next-article" onclick="window.location.href='5-marzo-2025.html'">Articolo successivo ➡️</button>
     </footer>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let prevButton = document.getElementById("prev-article");
+            let nextButton = document.getElementById("next-article");
+            
+            function checkFileExists(url, button) {
+                fetch(url, { method: 'HEAD' })
+                    .then(response => {
+                        if (!response.ok) {
+                            button.style.display = 'none';
+                        }
+                    })
+                    .catch(() => button.style.display = 'none');
+            }
+            
+            if (prevButton) {
+                checkFileExists(prevButton.getAttribute("onclick").match(/'([^']+)'/)[1], prevButton);
+            }
+            
+            if (nextButton) {
+                checkFileExists(nextButton.getAttribute("onclick").match(/'([^']+)'/)[1], nextButton);
+            }
+        });
+    </script>
+
 </body>
 </html>
