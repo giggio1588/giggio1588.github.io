@@ -17,6 +17,7 @@ h1 {
 
 h2 {
     font-size: 20px;
+    text-align: center;
 }
 
 a {
@@ -28,7 +29,7 @@ a:hover {
     text-decoration: underline;
 }
 
-button {
+.toggle-dark-mode {
     position: fixed;
     top: 10px;
     right: 10px;
@@ -36,6 +37,21 @@ button {
     border: none;
     font-size: 20px;
     cursor: pointer;
+}
+
+.page{
+    font-family: "Courier New", monospace;
+    font-size: 18px;
+    position: bottom;
+    place-items: center;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.geolocalizzazione {
+    font-style: italic;
 }
 
 .aggiunta {
