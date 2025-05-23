@@ -3,32 +3,607 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diario</title>
-    <link rel="stylesheet" href="style.css">
-    <script defer src="script.js"></script>
+    <title>Bender Lab - Diamo forma all'impossibile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- Variabili Colore e Font --- */
+        :root {
+            --color-primary-dark: #6D73A7; /* RGB (109, 115, 167) */
+            --color-primary-light: #AEB5D1; /* RGB (174, 181, 209) */
+            --color-accent: #FFD581; /* RGB (255, 213, 129) */
+            --color-background: #F0F2F5; /* Sfondo chiaro per neumorfismo */
+            --color-text-dark: #333;
+            --color-text-light: #FFFFFF;
+            --color-shadow-dark: #c8cdd3; /* Ombra più scura per neumorfismo */
+            --color-shadow-light: #ffffff; /* Ombra più chiara per neumorfismo */
+
+            --font-primary: 'Baloo 2', cursive;
+            --font-secondary: 'Lato', sans-serif;
+
+            --neumorphism-pressed: inset 5px 5px 10px var(--color-shadow-dark), inset -5px -5px 10px var(--color-shadow-light);
+            --neumorphism-raised: 5px 5px 10px var(--color-shadow-dark), -5px -5px 10px var(--color-shadow-light);
+            --neumorphism-raised-strong: 8px 8px 15px var(--color-shadow-dark), -8px -8px 15px var(--color-shadow-light);
+        }
+
+        /* --- Reset Base & Stili Globali --- */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            background-color: var(--color-background);
+            color: var(--color-text-dark);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px; /* Larghezza massima del contenuto */
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-primary);
+            color: var(--color-primary-dark);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* --- Header --- */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            border-radius: 20px;
+            background-color: var(--color-background);
+            box-shadow: var(--neumorphism-raised);
+        }
+
+        .logo-img {
+            width: 150px; 
+            height: 150px; 
+            object-fit: cover; 
+            margin: 0 auto 15px auto;
+            border-radius: 50%; 
+            box-shadow: var(--neumorphism-raised-strong);
+        }
+
+        .slogan {
+            font-family: var(--font-primary);
+            font-size: 1.8em; 
+            color: var(--color-primary-dark);
+            margin-top: 10px;
+            font-weight: 500;
+        }
+
+        /* --- Pulsanti di Navigazione --- */
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px; 
+            margin-bottom: 40px; /* Ridotto margine per fare spazio alla nuova sezione */
+        }
+
+        .nav-button {
+            font-family: var(--font-primary);
+            font-size: 1.1em;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 12px;
+            background-color: var(--color-background);
+            color: var(--color-primary-dark);
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            box-shadow: var(--neumorphism-raised);
+            font-weight: 500;
+        }
+
+        .nav-button:hover {
+            box-shadow: var(--neumorphism-pressed);
+            color: var(--color-accent);
+        }
+        
+        .nav-button:active {
+            box-shadow: var(--neumorphism-pressed);
+            transform: translateY(1px); 
+        }
+
+        /* --- Sezione Generatore Idee Progetto (Gemini API) --- */
+        .idea-generator-section {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 25px;
+            background-color: var(--color-background);
+            border-radius: 20px;
+            box-shadow: var(--neumorphism-raised);
+        }
+
+        .idea-generator-section h2 {
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            color: var(--color-primary-dark);
+        }
+
+        .idea-input-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .idea-input-group label {
+            font-family: var(--font-secondary);
+            font-size: 1em;
+            color: var(--color-text-dark);
+            margin-bottom: 5px;
+        }
+
+        .idea-input {
+            font-family: var(--font-secondary);
+            padding: 10px 15px;
+            border: none;
+            border-radius: 10px;
+            background-color: var(--color-background);
+            box-shadow: var(--neumorphism-pressed); /* Effetto incavato */
+            width: 100%;
+            max-width: 400px;
+            font-size: 1em;
+            color: var(--color-text-dark);
+        }
+
+        .idea-input:focus {
+            outline: none;
+            box-shadow: var(--neumorphism-pressed), 0 0 0 2px var(--color-accent); /* Evidenzia al focus */
+        }
+        
+        .generate-idea-button {
+            font-family: var(--font-primary);
+            font-size: 1.2em;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 12px;
+            background-color: var(--color-accent);
+            color: var(--color-text-dark);
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            box-shadow: var(--neumorphism-raised);
+            font-weight: 700; /* Più enfasi */
+        }
+
+        .generate-idea-button:hover {
+            box-shadow: var(--neumorphism-pressed);
+            background-color: #FFCA6A; 
+        }
+        .generate-idea-button:active {
+            box-shadow: var(--neumorphism-pressed);
+            transform: translateY(1px);
+        }
+
+        .loading-indicator {
+            display: none; /* Nascosto di default */
+            margin-top: 20px;
+            font-family: var(--font-secondary);
+            color: var(--color-primary-dark);
+        }
+        .loading-indicator.show {
+            display: block;
+        }
+
+        #generated-ideas-container {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .generated-idea-card {
+            background-color: var(--color-background);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--neumorphism-raised);
+            margin-bottom: 20px;
+            transition: all 0.3s ease-in-out;
+        }
+        .generated-idea-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--neumorphism-raised-strong);
+        }
+
+        .generated-idea-card h4 {
+            font-family: var(--font-primary);
+            color: var(--color-accent); /* Titolo idea in colore accento */
+            font-size: 1.5em;
+            margin-bottom: 8px;
+        }
+        .generated-idea-card p {
+            font-family: var(--font-secondary);
+            font-size: 1em;
+            color: var(--color-text-dark);
+            line-height: 1.5;
+        }
+        .error-message {
+            color: red;
+            margin-top: 15px;
+            font-family: var(--font-secondary);
+        }
+
+
+        /* --- Sezione Progetti --- */
+        .projects-section {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .projects-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+
+        .projects-grid {
+            display: grid;
+            gap: 25px;
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .project-card {
+            background-color: var(--color-background);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--neumorphism-raised);
+            transition: all 0.3s ease-in-out;
+            min-height: 200px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center; 
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--neumorphism-raised-strong);
+        }
+
+        .project-card img.placeholder {
+            width: 100%;
+            height: 120px; 
+            object-fit: cover; 
+            border-radius: 10px;
+            margin-bottom: 15px;
+            background-color: var(--color-primary-light); 
+        }
+        
+        .project-card h3 {
+            font-family: var(--font-primary);
+            color: var(--color-primary-dark);
+            font-size: 1.3em;
+            margin-top: 10px;
+        }
+        
+        .project-card p {
+            font-size: 0.9em;
+            color: var(--color-text-dark);
+        }
+
+        .show-more-button {
+            font-family: var(--font-primary);
+            font-size: 1.1em;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 12px;
+            background-color: var(--color-accent);
+            color: var(--color-text-dark);
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            box-shadow: var(--neumorphism-raised);
+            margin-top: 30px;
+            display: inline-block; 
+            font-weight: 500;
+        }
+
+        .show-more-button:hover {
+            box-shadow: var(--neumorphism-pressed);
+            background-color: #FFCA6A; 
+        }
+        .show-more-button:active {
+            box-shadow: var(--neumorphism-pressed);
+            transform: translateY(1px);
+        }
+
+        /* --- Footer --- */
+        .footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: auto; 
+            width: 100%;
+        }
+
+        .instagram-link a {
+            display: inline-flex; 
+            align-items: center;
+            text-decoration: none;
+            color: var(--color-primary-dark);
+            font-family: var(--font-secondary);
+            padding: 10px 15px;
+            border-radius: 10px;
+            transition: all 0.2s ease-in-out;
+        }
+        
+        .instagram-link a:hover {
+            background-color: var(--color-primary-light);
+            color: var(--color-text-light);
+            box-shadow: var(--neumorphism-raised);
+        }
+
+        .instagram-link svg {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+            fill: currentColor; 
+        }
+        
+        /* --- Media Queries per Responsività --- */
+        @media (max-width: 992px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr); 
+            }
+            .slogan { font-size: 1.6em; }
+            .projects-section h2, .idea-generator-section h2 { font-size: 2.2em; }
+        }
+
+        @media (max-width: 768px) {
+            .slogan { font-size: 1.4em; }
+            .nav-buttons { flex-direction: column; gap: 15px; }
+            .nav-button { width: 100%; max-width: 300px; margin: 0 auto; }
+            .projects-section h2, .idea-generator-section h2 { font-size: 2em; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .idea-input { max-width: 100%; }
+        }
+
+        @media (max-width: 480px) {
+            .slogan { font-size: 1.2em; }
+            .projects-section h2, .idea-generator-section h2 { font-size: 1.8em; }
+            .nav-button, .show-more-button, .generate-idea-button { font-size: 1em; padding: 10px 20px; }
+            .project-card, .generated-idea-card { padding: 15px; }
+            .idea-generator-section { padding: 20px; }
+        }
+
+    </style>
 </head>
 <body>
+    <div class="container">
+        <header class="header">
+            <img src="logo 2.jpg" alt="Bender Lab Logo" class="logo-img" 
+                 onerror="this.onerror=null; this.src='https://placehold.co/150x150/AEB5D1/6D73A7?text=Logo'; console.error('Logo originale non trovato, caricato placeholder.')">
+            <h1 class="slogan">Diamo forma all'impossibile, un layer alla volta</h1>
+        </header>
 
-    <header>
-        <h1>Diario di Egidio</h1>
-        <button class="toggle-dark-mode" id="toggle-dark-mode">🌙</button>
-    </header>
+        <nav class="nav-buttons">
+            <button class="nav-button">Chi siamo</button>
+            <button class="nav-button contact-button">Contattaci</button>
+        </nav>
 
-    <main>
-        <article>
-            <h2><a href="posts/04-03-2025.html">4 Marzo 2025</a></h2>
-            <p>Oggi ho deciso di iniziare il mio diario online. Senza SEO, senza regole, solo parole e pensieri.</p>
-        </article>
-        <article>
-            <h2><a href="posts/05-03-2025.html">5 Marzo 2025</a></h2>
-            <p>Altri test</p>
-        </article>
-        <article>
-            <h2><a href="posts/06-03-2025.html">6 Marzo 2025</a></h2>
-            <p>Aggiunte varie e prossima pianificazione.</p>
-        </article>
-    </main>
+        <section class="idea-generator-section">
+            <h2>Cercasi Ispirazione?</h2>
+            <div class="idea-input-group">
+                <label for="projectKeywords">Inserisci parole chiave (opzionale, es: AI, sostenibilità, arte)</label>
+                <input type="text" id="projectKeywords" class="idea-input" placeholder="Parole chiave...">
+            </div>
+            <button id="generateIdeaBtn" class="generate-idea-button">✨ Genera Idee Progetto!</button>
+            <div id="loadingIndicator" class="loading-indicator">Sto pensando... 🤔</div>
+            <div id="generated-ideas-container">
+                </div>
+             <div id="errorMessage" class="error-message" style="display: none;"></div>
+        </section>
 
+        <section class="projects-section">
+            <h2>Esplora i nostri progetti</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <img src="https://placehold.co/300x200/AEB5D1/6D73A7?text=Progetto+1" alt="Anteprima Progetto 1" class="placeholder">
+                    <h3>Progetto Alpha</h3>
+                    <p>Breve descrizione del progetto Alpha.</p>
+                </div>
+                <div class="project-card">
+                    <img src="https://placehold.co/300x200/AEB5D1/6D73A7?text=Progetto+2" alt="Anteprima Progetto 2" class="placeholder">
+                    <h3>Progetto Beta</h3>
+                    <p>Innovazione e design si fondono qui.</p>
+                </div>
+                <div class="project-card">
+                    <img src="https://placehold.co/300x200/AEB5D1/6D73A7?text=Progetto+3" alt="Anteprima Progetto 3" class="placeholder">
+                    <h3>Progetto Gamma</h3>
+                    <p>Soluzioni creative per sfide complesse.</p>
+                </div>
+                <div class="project-card">
+                    <img src="https://placehold.co/300x200/AEB5D1/6D73A7?text=Progetto+4" alt="Anteprima Progetto 4" class="placeholder">
+                    <h3>Progetto Delta</h3>
+                    <p>Tecnologia all'avanguardia per il futuro.</p>
+                </div>
+                <div class="project-card">
+                    <img src="https://placehold.co/300x200/AEB5D1/6D73A7?text=Progetto+5" alt="Anteprima Progetto 5" class="placeholder">
+                    <h3>Progetto Epsilon</h3>
+                    <p>Un altro brillante esempio di ingegno.</p>
+                </div>
+                <div class="project-card">
+                    <img src="https://placehold.co/300x200/AEB5D1/6D73A7?text=Progetto+6" alt="Anteprima Progetto 6" class="placeholder">
+                    <h3>Progetto Zeta</h3>
+                    <p>Esplorando nuove frontiere.</p>
+                </div>
+                <div class="project-card">
+                    <img src="https://placehold.co/300x200/AEB5D1/6D73A7?text=Progetto+7" alt="Anteprima Progetto 7" class="placeholder">
+                    <h3>Progetto Eta</h3>
+                    <p>Design funzionale e accattivante.</p>
+                </div>
+                <div class="project-card">
+                    <img src="https://placehold.co/300x200/AEB5D1/6D73A7?text=Progetto+8" alt="Anteprima Progetto 8" class="placeholder">
+                    <h3>Progetto Theta</h3>
+                    <p>L'ultima creazione del nostro laboratorio.</p>
+                </div>
+            </div>
+            <button class="show-more-button">Mostra altri</button>
+        </section>
+
+        <footer class="footer">
+            <div class="instagram-link">
+                <a href="https://www.instagram.com/TUO_PROFILO_INSTAGRAM" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.27.058 2.122.242 2.88.545.762.304 1.386.743 2.012 1.37.628.625.97 1.248 1.37 2.01.305.76.488 1.61.547 2.88.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.06 1.27-.242 2.122-.547 2.88-.302.762-.738 1.386-1.37 2.012-.624.628-1.248.97-2.01 1.37-.76.305-1.61.488-2.88.547-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.27-.06-2.122-.242-2.88-.547-.762-.302-1.386-.738-2.012-1.37-.628-.624-.97-1.248-1.37-2.01-.305-.76-.488-1.61-.547-2.88-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.06-1.27.242-2.122.547-2.88.303-.762.74-.1.386 1.37-2.012.625-.628 1.248-.97 2.01-1.37.76-.305 1.61-.488 2.88-.547C8.416 2.175 8.796 2.163 12 2.163zm0 1.802c-3.15 0-3.505.012-4.725.068-1.18.053-1.847.23-2.39.438-.584.227-.99.52-1.42.958-.43.438-.73.837-.958 1.42-.208.543-.385 1.21-.438 2.39C2.013 8.495 2 8.85 2 12s.013 3.505.068 4.725c.053 1.18.23 1.847.438 2.39.227.584.52.99.958 1.42.438.43.837.73 1.42.958.543.208 1.21.385 2.39.438C8.495 21.987 8.85 22 12 22s3.505-.013 4.725-.068c1.18-.053 1.847-.23 2.39-.438.584-.227.99.52 1.42-.958.43-.438.73-.837.958-1.42.208.543-.385-1.21.438-2.39.055-1.22.067-1.575.067-4.725s-.012-3.505-.067-4.725c-.053-1.18-.23-1.847-.438-2.39-.227-.584-.52-.99-.958-1.42-.438-.43-.837-.73-1.42-.958-.543-.208-1.21-.385-2.39-.438C15.505 3.977 15.15 3.965 12 3.965zm0 2.972c-2.67 0-4.862 2.192-4.862 4.862s2.192 4.862 4.862 4.862 4.862-2.192 4.862-4.862S14.67 6.937 12 6.937zm0 7.927c-1.692 0-3.065-1.373-3.065-3.065s1.373-3.065 3.065-3.065 3.065 1.373 3.065 3.065-1.373 3.065-3.065 3.065zm4.965-8.202c0-.77.623-1.394 1.393-1.394s1.393.623 1.393 1.394c0 .77-.623 1.394-1.393 1.394s-1.393-.624-1.393-1.394z"/>
+                    </svg>
+                    Seguici su Instagram
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Gestione "Mostra altri" per progetti esistenti ---
+            const showMoreButton = document.querySelector('.show-more-button');
+            const projectCards = document.querySelectorAll('.projects-grid .project-card');
+            const initialVisibleMobile = 2; 
+            let currentlyVisible = initialVisibleMobile;
+
+            function updateVisibleCards() {
+                const isMobile = window.innerWidth <= 768;
+                projectCards.forEach((card, index) => {
+                    if (isMobile) {
+                        card.style.display = index < currentlyVisible ? 'flex' : 'none';
+                    } else {
+                        card.style.display = 'flex'; 
+                    }
+                });
+                if (showMoreButton){
+                    if (isMobile && currentlyVisible >= projectCards.length) {
+                        showMoreButton.style.display = 'none'; 
+                    } else if (isMobile) {
+                        showMoreButton.style.display = 'inline-block';
+                    } else {
+                        showMoreButton.style.display = 'inline-block'; 
+                    }
+                }
+            }
+            
+            if (showMoreButton) {
+                showMoreButton.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        currentlyVisible += 2; 
+                        updateVisibleCards();
+                    } else {
+                        console.log("Tutti i progetti desktop sono già visualizzati o la funzionalità 'Mostra altri' è da implementare per il caricamento dinamico.");
+                    }
+                });
+            }
+            updateVisibleCards();
+            window.addEventListener('resize', updateVisibleCards);
+
+            // --- Logica per il Generatore di Idee Progetto (Gemini API) ---
+            const generateIdeaBtn = document.getElementById('generateIdeaBtn');
+            const projectKeywordsInput = document.getElementById('projectKeywords');
+            const ideasContainer = document.getElementById('generated-ideas-container');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const errorMessageDiv = document.getElementById('errorMessage');
+
+            if (generateIdeaBtn) {
+                generateIdeaBtn.addEventListener('click', async () => {
+                    const userKeywords = projectKeywordsInput.value.trim();
+                    ideasContainer.innerHTML = ''; // Pulisce risultati precedenti
+                    errorMessageDiv.style.display = 'none'; // Nasconde errori precedenti
+                    loadingIndicator.classList.add('show'); // Mostra indicatore di caricamento
+
+                    const prompt = `Sei un assistente creativo per Bender Lab, un laboratorio che 'dà forma all'impossibile, un layer alla volta'. Genera 3 idee innovative per progetti che potrebbero essere sviluppati da Bender Lab. Ogni idea deve includere un nome di progetto conciso e una breve descrizione (massimo 2 frasi). Se l'utente fornisce delle parole chiave, usale come ispirazione principale per le idee. Parole chiave dell'utente: '${userKeywords}'. Se non vengono fornite parole chiave, genera idee generali focalizzate su tecnologia, design innovativo e soluzioni futuristiche. Rispondi solo con il JSON strutturato secondo lo schema fornito.`;
+
+                    const apiKey = ""; // Lasciare vuoto, verrà gestito dall'ambiente Canvas
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                    
+                    const payload = {
+                        contents: [{ role: "user", parts: [{ text: prompt }] }],
+                        generationConfig: {
+                            responseMimeType: "application/json",
+                            responseSchema: {
+                                type: "OBJECT",
+                                properties: {
+                                    projectIdeas: {
+                                        type: "ARRAY",
+                                        items: {
+                                            type: "OBJECT",
+                                            properties: {
+                                                projectName: { type: "STRING", description: "Un nome breve e accattivante per il progetto." },
+                                                projectDescription: { type: "STRING", description: "Una breve descrizione (1-2 frasi) del progetto." }
+                                            },
+                                            required: ["projectName", "projectDescription"]
+                                        }
+                                    }
+                                },
+                                required: ["projectIdeas"]
+                            }
+                        }
+                    };
+
+                    try {
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+
+                        if (!response.ok) {
+                            const errorData = await response.json();
+                            console.error('Errore API Gemini:', errorData);
+                            throw new Error(`Errore dall'API: ${errorData.error?.message || response.statusText}`);
+                        }
+
+                        const result = await response.json();
+                        
+                        if (result.candidates && result.candidates.length > 0 &&
+                            result.candidates[0].content && result.candidates[0].content.parts &&
+                            result.candidates[0].content.parts.length > 0) {
+                            
+                            const ideasJsonString = result.candidates[0].content.parts[0].text;
+                            const parsedIdeas = JSON.parse(ideasJsonString);
+
+                            if (parsedIdeas.projectIdeas && parsedIdeas.projectIdeas.length > 0) {
+                                parsedIdeas.projectIdeas.forEach(idea => {
+                                    const ideaCard = document.createElement('div');
+                                    ideaCard.classList.add('generated-idea-card');
+                                    ideaCard.innerHTML = `
+                                        <h4>${idea.projectName}</h4>
+                                        <p>${idea.projectDescription}</p>
+                                    `;
+                                    ideasContainer.appendChild(ideaCard);
+                                });
+                            } else {
+                                ideasContainer.innerHTML = '<p>Non sono riuscito a generare idee questa volta. Prova con parole chiave diverse!</p>';
+                            }
+                        } else {
+                            console.error('Struttura risposta API Gemini inattesa:', result);
+                            throw new Error('Nessuna idea generata o formato risposta non valido.');
+                        }
+
+                    } catch (error) {
+                        console.error('Errore durante la generazione delle idee:', error);
+                        errorMessageDiv.textContent = `Si è verificato un errore: ${error.message}. Riprova più tardi.`;
+                        errorMessageDiv.style.display = 'block';
+                    } finally {
+                        loadingIndicator.classList.remove('show'); // Nasconde indicatore
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
-
