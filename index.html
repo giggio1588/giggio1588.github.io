@@ -77,11 +77,11 @@
         }
 
         .logo-img {
-            width: 150px; 
-            height: 150px; 
-            object-fit: cover; 
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
             margin: 0 auto 15px auto;
-            border-radius: 50%; 
+            /* border-radius e background rimossi per lasciare il logo libero */
             box-shadow: var(--neumorphism-raised-strong);
         }
 
@@ -325,6 +325,90 @@
             transform: translateY(1px);
         }
 
+        /* --- Sticky Header Compatto On Scroll --- */
+        .sticky-header-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            background: var(--color-background);
+            box-shadow: var(--neumorphism-raised);
+            border-radius: 0 0 18px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 18px;
+            z-index: 1000;
+            height: 54px;
+            min-height: 54px;
+            transition: transform 0.3s, opacity 0.3s;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .sticky-header-bar.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .sticky-header-bar .sticky-nav {
+            display: flex;
+            gap: 8px;
+        }
+        .sticky-header-bar .sticky-logo {
+            width: 32px;
+            height: 32px;
+            object-fit: cover;
+            margin-right: 8px;
+            /* border-radius e background rimossi per lasciare il logo libero */
+        }
+        .sticky-header-bar .brand-name {
+            font-family: var(--font-primary);
+            font-size: 1em;
+            color: var(--color-primary-dark);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .sticky-header-bar .sticky-nav-button {
+            font-family: var(--font-primary);
+            font-size: 0.95em;
+            padding: 7px 16px;
+            border: none;
+            border-radius: 8px;
+            background-color: var(--color-background);
+            color: var(--color-primary-dark);
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            box-shadow: var(--neumorphism-raised);
+            font-weight: 500;
+        }
+        .sticky-header-bar .sticky-nav-button:hover {
+            box-shadow: var(--neumorphism-pressed);
+            color: var(--color-accent);
+        }
+        .sticky-header-bar .sticky-nav-button:active {
+            box-shadow: var(--neumorphism-pressed);
+            transform: translateY(1px);
+        }
+        @media (max-width: 600px) {
+            .sticky-header-bar {
+                height: 44px;
+                min-height: 44px;
+                padding: 0 6px;
+                border-radius: 0 0 12px 12px;
+            }
+            .sticky-header-bar .sticky-logo {
+                width: 22px;
+                height: 22px;
+                margin-right: 5px;
+            }
+            .sticky-header-bar .brand-name {
+                font-size: 0.85em;
+            }
+            .sticky-header-bar .sticky-nav-button {
+                font-size: 0.85em;
+                padding: 5px 10px;
+            }
+        }
+
         /* --- Footer --- */
         .footer {
             text-align: center;
@@ -386,11 +470,22 @@
     </style>
 </head>
 <body>
+    <div class="sticky-header-bar" id="stickyHeaderBar">
+        <div style="display: flex; align-items: center;">
+            <img src="images/Logo 3D.png" alt="Logo Bender Lab" class="sticky-logo" onerror="this.onerror=null; this.src='https://placehold.co/36x36/AEB5D1/6D73A7?text=Logo';">
+            <span class="brand-name">Bender Lab</span>
+        </div>
+        <div class="sticky-nav">
+            <button class="sticky-nav-button">Chi siamo</button>
+            <button class="sticky-nav-button contact-button">Contattaci</button>
+        </div>
+    </div>
     <div class="container">
         <header class="header">
-            <img src="images/Logo3d.png" alt="3D robot mascot smiling and drawing a small robot figure with a marker, set against a yellow circle background. The scene conveys creativity and a friendly, playful atmosphere. No visible text in the image." class="logo-img"
+            <img src="images/Logo 3D.png" alt="3D robot mascot smiling and drawing a small robot figure with a marker, set against a yellow circle background. The scene conveys creativity and a friendly, playful atmosphere. No visible text in the image." class="logo-img"
              onerror="this.onerror=null; this.src='https://placehold.co/150x150/AEB5D1/6D73A7?text=Logo'; console.error('Logo originale non trovato, caricato placeholder.')">
-            <h1 class="slogan">Diamo forma all'impossibile, un layer alla volta</h1>
+            <h1>Bender Lab</h1>
+             <h2 class="slogan">Diamo forma all'impossibile, un layer alla volta</h2>
         </header>
 
         <nav class="nav-buttons">
@@ -472,137 +567,15 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // --- Gestione "Mostra altri" per progetti esistenti ---
-            const showMoreButton = document.querySelector('.show-more-button');
-            const projectCards = document.querySelectorAll('.projects-grid .project-card');
-            const initialVisibleMobile = 2; 
-            let currentlyVisible = initialVisibleMobile;
-
-            function updateVisibleCards() {
-                const isMobile = window.innerWidth <= 768;
-                projectCards.forEach((card, index) => {
-                    if (isMobile) {
-                        card.style.display = index < currentlyVisible ? 'flex' : 'none';
-                    } else {
-                        card.style.display = 'flex'; 
-                    }
-                });
-                if (showMoreButton){
-                    if (isMobile && currentlyVisible >= projectCards.length) {
-                        showMoreButton.style.display = 'none'; 
-                    } else if (isMobile) {
-                        showMoreButton.style.display = 'inline-block';
-                    } else {
-                        showMoreButton.style.display = 'inline-block'; 
-                    }
+            // --- Sticky Header Compatto On Scroll ---
+            const stickyHeaderBar = document.getElementById('stickyHeaderBar');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 60) {
+                    stickyHeaderBar.classList.add('visible');
+                } else {
+                    stickyHeaderBar.classList.remove('visible');
                 }
-            }
-            
-            if (showMoreButton) {
-                showMoreButton.addEventListener('click', function() {
-                    if (window.innerWidth <= 768) {
-                        currentlyVisible += 2; 
-                        updateVisibleCards();
-                    } else {
-                        console.log("Tutti i progetti desktop sono già visualizzati o la funzionalità 'Mostra altri' è da implementare per il caricamento dinamico.");
-                    }
-                });
-            }
-            updateVisibleCards();
-            window.addEventListener('resize', updateVisibleCards);
-
-            // --- Logica per il Generatore di Idee Progetto (Gemini API) ---
-            const generateIdeaBtn = document.getElementById('generateIdeaBtn');
-            const projectKeywordsInput = document.getElementById('projectKeywords');
-            const ideasContainer = document.getElementById('generated-ideas-container');
-            const loadingIndicator = document.getElementById('loadingIndicator');
-            const errorMessageDiv = document.getElementById('errorMessage');
-
-            if (generateIdeaBtn) {
-                generateIdeaBtn.addEventListener('click', async () => {
-                    const userKeywords = projectKeywordsInput.value.trim();
-                    ideasContainer.innerHTML = ''; // Pulisce risultati precedenti
-                    errorMessageDiv.style.display = 'none'; // Nasconde errori precedenti
-                    loadingIndicator.classList.add('show'); // Mostra indicatore di caricamento
-
-                    const prompt = `Sei un assistente creativo per Bender Lab, un laboratorio che 'dà forma all'impossibile, un layer alla volta'. Genera 3 idee innovative per progetti che potrebbero essere sviluppati da Bender Lab. Ogni idea deve includere un nome di progetto conciso e una breve descrizione (massimo 2 frasi). Se l'utente fornisce delle parole chiave, usale come ispirazione principale per le idee. Parole chiave dell'utente: '${userKeywords}'. Se non vengono fornite parole chiave, genera idee generali focalizzate su tecnologia, design innovativo e soluzioni futuristiche. Rispondi solo con il JSON strutturato secondo lo schema fornito.`;
-
-                    const apiKey = ""; // Lasciare vuoto, verrà gestito dall'ambiente Canvas
-                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-                    
-                    const payload = {
-                        contents: [{ role: "user", parts: [{ text: prompt }] }],
-                        generationConfig: {
-                            responseMimeType: "application/json",
-                            responseSchema: {
-                                type: "OBJECT",
-                                properties: {
-                                    projectIdeas: {
-                                        type: "ARRAY",
-                                        items: {
-                                            type: "OBJECT",
-                                            properties: {
-                                                projectName: { type: "STRING", description: "Un nome breve e accattivante per il progetto." },
-                                                projectDescription: { type: "STRING", description: "Una breve descrizione (1-2 frasi) del progetto." }
-                                            },
-                                            required: ["projectName", "projectDescription"]
-                                        }
-                                    }
-                                },
-                                required: ["projectIdeas"]
-                            }
-                        }
-                    };
-
-                    try {
-                        const response = await fetch(apiUrl, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(payload)
-                        });
-
-                        if (!response.ok) {
-                            const errorData = await response.json();
-                            console.error('Errore API Gemini:', errorData);
-                            throw new Error(`Errore dall'API: ${errorData.error?.message || response.statusText}`);
-                        }
-
-                        const result = await response.json();
-                        
-                        if (result.candidates && result.candidates.length > 0 &&
-                            result.candidates[0].content && result.candidates[0].content.parts &&
-                            result.candidates[0].content.parts.length > 0) {
-                            
-                            const ideasJsonString = result.candidates[0].content.parts[0].text;
-                            const parsedIdeas = JSON.parse(ideasJsonString);
-
-                            if (parsedIdeas.projectIdeas && parsedIdeas.projectIdeas.length > 0) {
-                                parsedIdeas.projectIdeas.forEach(idea => {
-                                    const ideaCard = document.createElement('div');
-                                    ideaCard.classList.add('generated-idea-card');
-                                    ideaCard.innerHTML = `
-                                        <h4>${idea.projectName}</h4>
-                                        <p>${idea.projectDescription}</p>
-                                    `;
-                                    ideasContainer.appendChild(ideaCard);
-                                });
-                            } else {
-                                ideasContainer.innerHTML = '<p>Non sono riuscito a generare idee questa volta. Prova con parole chiave diverse!</p>';
-                            }
-                        } else {
-                            console.error('Struttura risposta API Gemini inattesa:', result);
-                            throw new Error('Nessuna idea generata o formato risposta non valido.');
-                        }
-
-                    } catch (error) {
-                        console.error('Errore durante la generazione delle idee:', error);
-                        errorMessageDiv.textContent = `Si è verificato un errore: ${error.message}. Riprova più tardi.`;
-                        errorMessageDiv.style.display = 'block';
-                    } finally {
-                        loadingIndicator.classList.remove('show'); // Nasconde indicatore
-                    }
-                });
-            }
+            });
         });
     </script>
 </body>
