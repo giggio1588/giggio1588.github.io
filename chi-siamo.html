@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi siamo - Bender Lab</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary-dark: #6D73A7;
+            --color-primary-light: #AEB5D1;
+            --color-accent: #FFD581;
+            --color-background: #F0F2F5;
+            --color-text-dark: #333;
+            --color-shadow-dark: #c8cdd3;
+            --color-shadow-light: #ffffff;
+            --font-primary: 'Baloo 2', cursive;
+            --font-secondary: 'Lato', sans-serif;
+            --neumorphism-raised: 5px 5px 10px var(--color-shadow-dark), -5px -5px 10px var(--color-shadow-light);
+        }
+        body {
+            font-family: var(--font-secondary);
+            background: var(--color-background);
+            color: var(--color-text-dark);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 94px auto 0 auto; /* 54px barra + 40px spazio */
+            background: var(--color-background);
+            border-radius: 24px;
+            box-shadow: var(--neumorphism-raised);
+            padding: 40px 24px 32px 24px;
+        }
+        @media (max-width: 600px) {
+            .container {
+                margin-top: 74px; /* 44px barra + 30px spazio */
+            }
+        }
+        h1 {
+            font-family: var(--font-primary);
+            color: var(--color-primary-dark);
+            font-size: 2.2em;
+            margin-bottom: 18px;
+        }
+        .team-section {
+            margin-top: 32px;
+        }
+        .team-member {
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+        .team-member img {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: var(--neumorphism-raised-strong);
+            background: var(--color-primary-light);
+            flex-shrink: 0;
+        }
+        .team-member-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .team-member h3 {
+            font-family: var(--font-primary);
+            color: var(--color-primary-dark);
+            margin-bottom: 4px;
+        }
+        .team-member-info h4 {
+            font-family: var(--font-secondary);
+            color: var(--color-accent);
+            font-size: 1.05em;
+            font-weight: 700;
+            margin: 0 0 6px 0;
+        }
+        .team-member p {
+            margin: 0;
+        }
+        a.back-home {
+            display: inline-block;
+            margin-top: 30px;
+            font-family: var(--font-primary);
+            color: var(--color-primary-dark);
+            background: var(--color-background);
+            border-radius: 10px;
+            box-shadow: var(--neumorphism-raised);
+            padding: 10px 22px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: box-shadow 0.2s, color 0.2s;
+        }
+        a.back-home:hover {
+            color: var(--color-accent);
+            box-shadow: 0 2px 12px 0 var(--color-primary-light);
+        }
+        /* --- Sticky Header Compatto On Scroll --- */
+        .sticky-header-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            box-sizing: border-box;
+            background: var(--color-background);
+            box-shadow: var(--neumorphism-raised);
+            border-radius: 0 0 18px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 18px;
+            z-index: 1000;
+            height: 54px;
+            min-height: 54px;
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .sticky-header-bar .sticky-nav {
+            display: flex;
+            gap: 8px;
+        }
+        .sticky-header-bar .sticky-logo {
+            width: 32px;
+            height: 32px;
+            object-fit: cover;
+            margin-right: 8px;
+        }
+        .sticky-header-bar .brand-name {
+            font-family: var(--font-primary);
+            font-size: 1em;
+            color: var(--color-primary-dark);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .sticky-header-bar .sticky-nav-button {
+            font-family: var(--font-primary);
+            font-size: 0.95em;
+            padding: 7px 16px;
+            border: none;
+            border-radius: 8px;
+            background-color: var(--color-background);
+            color: var(--color-primary-dark);
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            box-shadow: var(--neumorphism-raised);
+            font-weight: 500;
+        }
+        .sticky-header-bar .sticky-nav-button:hover {
+            box-shadow: var(--neumorphism-pressed);
+            color: var(--color-accent);
+        }
+        .sticky-header-bar .sticky-nav-button:active {
+            box-shadow: var(--neumorphism-pressed);
+            transform: translateY(1px);
+        }
+        .sticky-header-bar .sticky-nav-button.active {
+            color: var(--color-accent);
+            background: var(--color-primary-light);
+        }
+        @media (max-width: 600px) {
+            .sticky-header-bar {
+                height: 44px;
+                min-height: 44px;
+                padding: 0 6px;
+                border-radius: 0 0 12px 12px;
+            }
+            .sticky-header-bar .sticky-logo {
+                width: 22px;
+                height: 22px;
+                margin-right: 5px;
+            }
+            .sticky-header-bar .brand-name {
+                font-size: 0.85em;
+            }
+            .sticky-header-bar .sticky-nav-button {
+                font-size: 0.85em;
+                padding: 5px 10px;
+            }
+        }
+        .team-grid {
+            display: grid;
+            gap: 25px;
+            grid-template-columns: repeat(3, 1fr);
+            margin-top: 32px;
+        }
+        .team-card {
+            background-color: var(--color-background);
+            border-radius: 15px;
+            padding: 24px 18px 18px 18px;
+            box-shadow: var(--neumorphism-raised);
+            transition: all 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--neumorphism-raised-strong);
+        }
+        .team-card img {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: var(--neumorphism-raised-strong);
+            background: var(--color-primary-light);
+            margin-bottom: 15px;
+        }
+        .team-card h3 {
+            font-family: var(--font-primary);
+            color: var(--color-primary-dark);
+            font-size: 1.15em;
+            margin: 0 0 4px 0;
+        }
+        .team-card h4 {
+            font-family: var(--font-secondary);
+            color: var(--color-accent);
+            font-size: 1em;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+        }
+        .team-card p {
+            font-size: 0.97em;
+            color: var(--color-text-dark);
+            margin: 0;
+        }
+        @media (max-width: 900px) {
+            .team-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 600px) {
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sticky-header-bar visible" id="stickyHeaderBar">
+        <a href="index.html" class="brand-link" style="display: flex; align-items: center; text-decoration: none;">
+            <img src="images/Logo 3D.png" alt="Logo Bender Lab" class="sticky-logo" onerror="this.onerror=null; this.src='https://placehold.co/36x36/AEB5D1/6D73A7?text=Logo';">
+            <span class="brand-name">Bender Lab</span>
+        </a>
+        <div class="sticky-nav">
+            <a href="index.html#progetti" class="sticky-nav-button">Progetti</a>
+            <a href="chi-siamo.html" class="sticky-nav-button active">Chi siamo</a>
+            <a href="index.html#contatti" class="sticky-nav-button contact-button">Contattaci</a>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Chi siamo</h1>
+        <p><h3>"Diamo forma all'impossibile, un layer alla volta!"</h3><br>
+            Dopo tanto lavoro e passione, siamo entusiasti di presentarvi Bender lab, 
+            la nostra nuova avventura nel mondo della stampa 3D personalizzata. 
+            Con Bender lab, vogliamo essere il vostro partner creativo per trasformare 
+            le vostre idee più audaci in realtà tangibili. Che si tratti di riportare in 
+            vita oggetti dimenticati, creare personalizzazioni uniche per i vostri hobby, 
+            riparare con creatività o offrirvi consulenza su misura per il 
+            vostro progetto – tutto inizia ora, con Bender lab.</p>
+        <div class="team-section">
+            <h2 style="text-align:center; color: var(--color-primary-dark); font-family: var(--font-primary); margin-bottom: 18px;">Il team</h2>
+            <div class="team-grid">
+                <div class="team-card">
+                    <img src="images/Matteo.jpg" alt="Matteo">
+                    <h3>Matteo Salvatore Berardi</h3>
+                    <p></p>
+                </div>
+                <div class="team-card">
+                    <img src="images/Egidio.jpg" alt="Egidio Giacoia">
+                    <h3>Egidio Giacoia</h3>
+                    <p></p>
+                </div>
+                <div class="team-card">
+                    <img src="images/Luca.jpg" alt="Luca Santoro">
+                    <h3>Luca Santoro</h3>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+        <a href="index.html" class="back-home">Torna alla Home</a>
+    </div>
+</body>
+</html>

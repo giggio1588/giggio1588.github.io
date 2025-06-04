@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contattaci - Bender Lab</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary-dark: #6D73A7;
+            --color-primary-light: #AEB5D1;
+            --color-accent: #FFD581;
+            --color-background: #F0F2F5;
+            --color-text-dark: #333;
+            --color-shadow-dark: #c8cdd3;
+            --color-shadow-light: #ffffff;
+            --font-primary: 'Baloo 2', cursive;
+            --font-secondary: 'Lato', sans-serif;
+            --neumorphism-raised: 5px 5px 10px var(--color-shadow-dark), -5px -5px 10px var(--color-shadow-light);
+        }
+        body {
+            font-family: var(--font-secondary);
+            background: var(--color-background);
+            color: var(--color-text-dark);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 94px auto 0 auto;
+            background: var(--color-background);
+            border-radius: 24px;
+            box-shadow: var(--neumorphism-raised);
+            padding: 40px 24px 32px 24px;
+        }
+        h1 {
+            font-family: var(--font-primary);
+            color: var(--color-primary-dark);
+            font-size: 2em;
+            margin-bottom: 18px;
+            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        label {
+            font-family: var(--font-secondary);
+            color: var(--color-primary-dark);
+            font-weight: 600;
+        }
+        input, textarea {
+            font-family: var(--font-secondary);
+            padding: 10px 15px;
+            border: none;
+            border-radius: 10px;
+            background-color: var(--color-background);
+            box-shadow: var(--neumorphism-raised);
+            font-size: 1em;
+            color: var(--color-text-dark);
+        }
+        textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+        button[type="submit"] {
+            font-family: var(--font-primary);
+            font-size: 1.1em;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 12px;
+            background-color: var(--color-accent);
+            color: var(--color-text-dark);
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            box-shadow: var(--neumorphism-raised);
+            font-weight: 600;
+        }
+        button[type="submit"]:hover {
+            box-shadow: var(--neumorphism-pressed);
+            background-color: #FFCA6A;
+        }
+        .back-home {
+            display: inline-block;
+            margin-top: 30px;
+            font-family: var(--font-primary);
+            color: var(--color-primary-dark);
+            background: var(--color-background);
+            border-radius: 10px;
+            box-shadow: var(--neumorphism-raised);
+            padding: 10px 22px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: box-shadow 0.2s, color 0.2s;
+        }
+        .back-home:hover {
+            color: var(--color-accent);
+            box-shadow: 0 2px 12px 0 var(--color-primary-light);
+        }
+        /* Sticky header bar sempre visibile */
+        .sticky-header-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            box-sizing: border-box;
+            background: var(--color-background);
+            box-shadow: var(--neumorphism-raised);
+            border-radius: 0 0 18px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 18px;
+            z-index: 1000;
+            height: 54px;
+            min-height: 54px;
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .sticky-header-bar .sticky-nav {
+            display: flex;
+            gap: 8px;
+        }
+        .sticky-header-bar .sticky-logo {
+            width: 32px;
+            height: 32px;
+            object-fit: cover;
+            margin-right: 8px;
+        }
+        .sticky-header-bar .brand-name {
+            font-family: var(--font-primary);
+            font-size: 1em;
+            color: var(--color-primary-dark);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .sticky-header-bar .sticky-nav-button {
+            font-family: var(--font-primary);
+            font-size: 0.95em;
+            padding: 7px 16px;
+            border: none;
+            border-radius: 8px;
+            background-color: var(--color-background);
+            color: var(--color-primary-dark);
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            box-shadow: var(--neumorphism-raised);
+            font-weight: 500;
+        }
+        .sticky-header-bar .sticky-nav-button:hover {
+            box-shadow: var(--neumorphism-pressed);
+            color: var(--color-accent);
+        }
+        .sticky-header-bar .sticky-nav-button.active {
+            color: var(--color-accent);
+            background: var(--color-primary-light);
+        }
+        @media (max-width: 600px) {
+            .sticky-header-bar {
+                height: 44px;
+                min-height: 44px;
+                padding: 0 6px;
+                border-radius: 0 0 12px 12px;
+            }
+            .sticky-header-bar .sticky-logo {
+                width: 22px;
+                height: 22px;
+                margin-right: 5px;
+            }
+            .sticky-header-bar .brand-name {
+                font-size: 0.85em;
+            }
+            .sticky-header-bar .sticky-nav-button {
+                font-size: 0.85em;
+                padding: 5px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sticky-header-bar" id="stickyHeaderBar">
+        <a href="index.html" class="brand-link" style="display: flex; align-items: center; text-decoration: none;">
+            <img src="images/Logo 3D.png" alt="Logo Bender Lab" class="sticky-logo" onerror="this.onerror=null; this.src='https://placehold.co/36x36/AEB5D1/6D73A7?text=Logo';">
+            <span class="brand-name">Bender Lab</span>
+        </a>
+        <div class="sticky-nav">
+            <a href="index.html#progetti" class="sticky-nav-button">Progetti</a>
+            <a href="chi-siamo.html" class="sticky-nav-button">Chi siamo</a>
+            <a href="contattaci.html" class="sticky-nav-button active contact-button">Contattaci</a>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Contattaci</h1>
+        <form>
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" required>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+            <label for="messaggio">Messaggio</label>
+            <textarea id="messaggio" name="messaggio" required></textarea>
+            <button type="submit">Invia</button>
+        </form>
+        <a href="index.html" class="back-home">Torna alla Home</a>
+    </div>
+</body>
+</html>
