@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notizie - Bender Lab</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Lato', sans-serif; background: #F0F2F5; color: #333; margin: 0; padding: 0; }
+        .container { max-width: 900px; margin: 0 auto; padding: 30px 15px; }
+        h1 { font-family: 'Baloo 2', cursive; color: #6D73A7; text-align: center; margin-bottom: 40px; }
+        .news-list { display: flex; flex-direction: column; gap: 32px; }
+        .news-card { background: #fff; border-radius: 16px; box-shadow: 0 2px 12px #c8cdd3; padding: 28px; }
+        .news-card img { width: 100%; max-height: 220px; object-fit: cover; border-radius: 10px; margin-bottom: 18px; }
+        .news-card h2 { font-family: 'Baloo 2', cursive; color: #6D73A7; margin-bottom: 8px; }
+        .news-card .date { color: #888; font-size: 0.98em; margin-bottom: 10px; display: block; }
+        .news-card p { font-size: 1.08em; margin-bottom: 0; }
+        @media (max-width: 600px) { .news-card { padding: 14px; } }
+        a.back-home { display: inline-block; margin: 30px 0 0 0; color: #6D73A7; text-decoration: underline; font-size: 1.1em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Notizie dal Bender Lab</h1>
+        <div class="news-list">
+            <div class="news-card" id="life-design-festival">
+                <img src="images/life.jpg" alt="life">
+                <h2>Bender Lab al Life Design Festival</h2>
+                <span class="date">5 giugno 2024</span>
+                <p>Ti aspettiamo al nostro stand il 6 e 7 giugno al Terminal Gallitello! Vieni a scoprire le nostre ultime creazioni, parlare con il team e lasciarti ispirare dal mondo della stampa 3D e dell'innovazione.</p>
+            </div>
+            <div class="news-card" id="nascita-sogno">
+                <img src="https://placehold.co/300x200/AEB5D1/6D73A7?text=Progetto+2" alt="Anteprima Progetto 2">
+                <h2>La nascita di un sogno</h2>
+                <span class="date">1 giugno 2024</span>
+                <p>Innovazione e design si fondono qui. Segui il nostro percorso e scopri come nasce un progetto dal concept alla realizzazione concreta!</p>
+            </div>
+        </div>
+        <a href="index.html" class="back-home">&larr; Torna alla home</a>
+    </div>
+</body>
+</html>
